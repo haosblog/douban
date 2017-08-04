@@ -1,0 +1,29 @@
+{
+    "name": "haosblog/douban",
+    "description": "豆瓣SDK",
+    "keywords": [
+        "douban",
+        "douban-sdk",
+        "sdk"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "haosblog",
+            "email": "xiaohao@haosblog.com"
+        }
+    ],
+    "require": {
+        "php":">=5.5.0",
+        "guzzlehttp/guzzle": "~6.2.1",
+        "psr/log": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Haosblog\\Douban\\": "src/"
+        }
+    }
+}
