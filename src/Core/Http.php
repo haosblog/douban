@@ -223,12 +223,12 @@ class Http
 
         $response = $this->getClient()->request($method, $url, $options);
 
-        Log::debug('API response:', [
-            'Status' => $response->getStatusCode(),
-            'Reason' => $response->getReasonPhrase(),
-            'Headers' => $response->getHeaders(),
-            'Body' => strval($response->getBody()),
-        ]);
+//        Log::debug('API response:', [
+//            'Status' => $response->getStatusCode(),
+//            'Reason' => $response->getReasonPhrase(),
+//            'Headers' => $response->getHeaders(),
+//            'Body' => strval($response->getBody()),
+//        ]);
 
         return $response;
     }

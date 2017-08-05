@@ -15,7 +15,24 @@ use GuzzleHttp\Client;
 
 class AbstractAPI
 {
+    
+    protected $http;
 
+    /**
+     * Get the Http instance
+     * 
+     * @return Http
+     */
+    protected function getHttp()
+    {
+        if(!$this->http instanceof Http){
+            $this->http = new Http();
+        }
+        
+        return $this->http;
+    }
+    
+    
     /**
      * GET request.
      *

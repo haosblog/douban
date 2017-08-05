@@ -7,7 +7,9 @@
  * @author hao
  */
 
-namespace App\Service\Douban;
+namespace Haosblog\Douban;
+
+use Haosblog\Douban\Core\AbstractAPI;
 
 class Book extends AbstractAPI
 {
