@@ -16,7 +16,7 @@
     "require": {
         "php":">=5.5.0",
         "guzzlehttp/guzzle": "~6.2.1",
-        "psr/log": "^1.0"
+        "monolog/monolog": "^1.23"
     },
     "require-dev": {
         "phpunit/phpunit": "~5.0"
@@ -24,6 +24,12 @@
     "autoload": {
         "psr-4": {
             "Haosblog\\Douban\\": "src/"
-        }
+        },
+		"autoload-dev": {
+			"psr-4": { "Haosblog\\Douban\\Test\\": "tests" }
+		}
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
