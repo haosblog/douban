@@ -1,21 +1,50 @@
 <?php
 
 /**
- * Description of Log
+ * 日志驱动类
  *
- * @create 2017-8-5 16:58:39
+ * @create 2017-8-7 16:41:44
  * @author hao
  */
 
 namespace Haosblog\Douban\Core;
 
-use Psr\Log\AbstractLogger;
+use Monolog\Logger;
+use Monolog\Handler\NullHandler;
+use Monolog\Handler\ErrorLogHandler;
 
-class Log extends AbstractLogger
+class Log
 {
-    public function log($level, $message, array $context = array())
+    /**
+     * 日志记录实例
+     *
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected static $logger;
+    
+    public function __callStatic($name, $arguments)
     {
-        
+        return forward_static_call_array([self::getLogger(), $name], $arguments);
     }
+    
+    /**
+     * 获取日志记录实例
+     * 
+     * @return \Psr\Log\LoggerInterface
+     */
+    public static function getLogger(){
+        if(!self::$logger){
+            $log = new Logger('DoubanSdk');
 
+            if (defined('PHPUNIT_RUNNING')) {
+                $log->pushHandler(new NullHandler());
+            } else {
+                $log->pushHandler(new ErrorLogHandler());
+            }
+
+            self::$logger = $log;
+        }
+        
+        return self::$logger;
+    }
 }
