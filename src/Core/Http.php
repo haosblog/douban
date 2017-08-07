@@ -12,7 +12,6 @@ namespace Haosblog\Douban\Core;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\HandlerStack;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LogLevel;
 
 class Http
 {
@@ -223,39 +222,14 @@ class Http
 
         $response = $this->getClient()->request($method, $url, $options);
 
-//        Log::debug('API response:', [
-//            'Status' => $response->getStatusCode(),
-//            'Reason' => $response->getReasonPhrase(),
-//            'Headers' => $response->getHeaders(),
-//            'Body' => strval($response->getBody()),
-//        ]);
+        Log::debug('API response:', [
+            'Status' => $response->getStatusCode(),
+            'Reason' => $response->getReasonPhrase(),
+            'Headers' => $response->getHeaders(),
+            'Body' => strval($response->getBody()),
+        ]);
 
         return $response;
-    }
-
-    /**
-     * @param \Psr\Http\Message\ResponseInterface|string $body
-     *
-     * @return mixed
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function parseJSON($body)
-    {
-        if ($body instanceof ResponseInterface) {
-            $body = $body->getBody();
-        }
-
-        if (empty($body)) {
-            return false;
-        }
-
-        $contents = \GuzzleHttp\json_decode($body, true);
-
-        Log::debug('API response decoded:', compact('contents'));
-
-
-        return $contents;
     }
 
     /**
