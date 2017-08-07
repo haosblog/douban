@@ -15,7 +15,11 @@ use GuzzleHttp\Client;
 
 class AbstractAPI
 {
-    
+    /**
+     * Http instance
+     * 
+     * @var \Haosblog\Douban\Core\Http
+     */
     protected $http;
 
     /**
@@ -38,14 +42,11 @@ class AbstractAPI
      *
      * @param string $url
      * @param array  $options
-     *
      * @return ResponseInterface
-     *
-     * @throws HttpException
      */
-    public function get($url, array $options = [])
+    protected function get($url, array $options = [])
     {
-        return $this->request($url, 'GET', ['query' => $options]);
+        return $this->getHttp()->get($url, $options);
     }
 
     /**
@@ -53,34 +54,64 @@ class AbstractAPI
      *
      * @param string       $url
      * @param array|string $options
-     *
      * @return ResponseInterface
-     *
-     * @throws HttpException
      */
-    public function post($url, $options = [])
+    protected function post($url, $options = [])
     {
-        $key = is_array($options) ? 'form_params' : 'body';
-
-        return $this->request($url, 'POST', [$key => $options]);
+        return $this->getHttp()->post($url, $options);
     }
     
     /**
-     * 请求api
+     * POST request the API and decode as json
      * 
-     * @param type $url
-     * @param type $method
-     * @param type $options
-     * @return type
+     * @param string $url
+     * @param array $options
      */
-    protected function request($url, $method = 'GET', $options = [])
-    {
-        $method = strtoupper($method);
-        $response = (new Client())->request($method, $url, $options);
-        
-        $content = $response->getBody();
+    protected function postAndParseJson($url, $options = []){
+        return $this->parseJSON($this->post($url, $options)->getBody());
+    }
+    
+    
+    /**
+     * GET request the API and decode as json
+     * 
+     * @param string $url
+     * @param array $options
+     */
+    protected function getAndParseJson($url, $options = []){
+        return $this->parseJSON($this->get($url, $options)->getBody());
+    }
+    
 
-        return $content;
+    /**
+     * 
+     * @param \Psr\Http\Message\ResponseInterface|string $body
+     * @throws \InvalidArgumentException
+     * @return array
+     */
+    protected function parseJSON($body)
+    {
+        if ($body instanceof ResponseInterface) {
+            $body = $body->getBody();
+        }
+
+        if (empty($body)) {
+            return false;
+        }
+
+        try{
+            $contents = \GuzzleHttp\json_decode($body, true);
+            Log::debug('API response decoded:', compact('contents'));
+        } catch (InvalidArgumentException $ex) {
+            Log::error('API response decoded error:', [
+                'ErrorMessage' => $ex->getMessage(),
+                'OriginalData' => $body,
+            ]);
+            
+            throw $ex;
+        }
+
+        return $contents;
     }
     
 }
