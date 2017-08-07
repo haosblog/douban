@@ -61,6 +61,6 @@ class Book extends AbstractAPI
      */
     public function search($options =[])
     {
-        return $this->get(self::API_BOOK_SEARCH, $options);
+        return $this->getAndParseJson(self::API_BOOK_SEARCH, $options);
     }
 }
