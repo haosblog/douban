@@ -19,14 +19,14 @@
         "monolog/monolog": "^1.23"
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.0"
+        "phpunit/phpunit": "~4.0"
     },
     "autoload": {
         "psr-4": {
             "Haosblog\\Douban\\": "src/"
         },
 		"autoload-dev": {
-			"psr-4": { "Haosblog\\Douban\\Test\\": "tests" }
+			"psr-4": { "Haosblog\\Douban\\Tests\\": "tests" }
 		}
     },
     "scripts": {
