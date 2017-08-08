@@ -25,7 +25,7 @@ class Tag extends AbstractSearch
             'count' => $count,
         ];
         
-        return $this->search($option);
+        return $this->doSearch($option);
     }
     
 }
