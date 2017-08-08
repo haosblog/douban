@@ -22,7 +22,7 @@ class Log
      */
     protected static $logger;
     
-    public function __callStatic($name, $arguments)
+    public static function __callStatic($name, $arguments)
     {
         return forward_static_call_array([self::getLogger(), $name], $arguments);
     }
