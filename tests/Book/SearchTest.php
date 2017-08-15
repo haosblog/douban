@@ -10,7 +10,7 @@
 namespace Haosblog\Douban\Tests\Book;
 
 use PHPUnit\Framework\TestCase;
-use Haosblog\Douban\Book\Search\Factory;
+use Haosblog\Douban\Book\Search;
 
 class SearchTest extends TestCase
 {
@@ -19,7 +19,8 @@ class SearchTest extends TestCase
      */
     public function testSearchByKeyword()
     {
-        $result = Factory::getInstance('keyword')->search('刘慈欣');
+        $searchObj = new Search();
+        $result = $searchObj->search('刘慈欣');
         $this->assertArrayHasKey('books', $result);
     }
     
@@ -28,7 +29,8 @@ class SearchTest extends TestCase
      */
     public function testSearchByTag()
     {
-        $result = Factory::getInstance('tag')->search('科幻');
+        $searchObj = new Search();
+        $result = $searchObj->byTag()->search('科幻');
         $this->assertArrayHasKey('books', $result);
     }
 }
