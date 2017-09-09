@@ -9,6 +9,7 @@
 
 namespace Haosblog\Douban\Book;
 
+use Exception;
 use Haosblog\Douban\Core\AbstractAPI;
 
 class Info extends AbstractAPI
@@ -33,7 +34,14 @@ class Info extends AbstractAPI
             $url = self::API_BOOK_INFO_BY_ISBN .'/'. $idOrIsbn;
         }
         
-        return $this->getAndParseJson($url);
+        try
+        {
+            return $this->getAndParseJson($url);
+        } catch (\GuzzleHttp\Exception\RequestException $ex) {
+            $errorInfo = $this->parseJSON($ex->getResponse()->getBody());
+            throw new Exception($errorInfo['msg'], $errorInfo['code']);
+        }
+        
     }
     
     

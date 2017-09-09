@@ -34,4 +34,12 @@ class InfoTest extends TestCase
         $this->assertArrayHasKey('image', $threebodyInfo);
     }
     
+    public function testErrorIsbn(){
+        try {
+            (new Info())->byIsbn()->getInfo(8787511714409);
+        } catch (\Exception $ex) {
+            $this->assertEquals($ex->getMessage(), 'book_not_found');
+        }
+    }
+    
 }
