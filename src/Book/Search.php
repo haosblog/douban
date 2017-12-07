@@ -28,15 +28,15 @@ class Search extends AbstractAPI
      * search books
      * 
      * @param string $keyword
-     * @param int $star
+     * @param int $start
      * @param int $count
      * @return array
      */
-    public function search($keyword, $star = 0, $count = 20)
+    public function search($keyword, $start = 0, $count = 20)
     {
         $options = [
             $this->searchType => $keyword,
-            'star' => $star,
+            'start' => $start,
             'count' => $count,
         ];
         
